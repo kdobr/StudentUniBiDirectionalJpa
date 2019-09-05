@@ -1,5 +1,6 @@
 package telran.ashkelon2018.student.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -21,7 +22,7 @@ public class Student {
 	int id;
 	String name;
 	String email;
-	@ManyToOne
+	@ManyToOne 
 	Group group;
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import telran.ashkelon2018.student.dao.GroupRepository;
 import telran.ashkelon2018.student.dao.StudentRepository;
 import telran.ashkelon2018.student.domain.Group;
+import telran.ashkelon2018.student.domain.GroupeUpdateDto;
 import telran.ashkelon2018.student.domain.Student;
 
 @Service
@@ -49,7 +50,33 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Iterable<Student> getStudentsByGroupId(int id) {
-		// TODO Auto-generated method stub
+		Group group = groupRepository.findById(id).orElse(null);
+		if( group== null) {
+			return null;
+		}
+		//return studentRepository.findByGroupId(id);
+		return group.getStudents();
+	}
+
+	@Override
+	@Transactional
+	public boolean removeGroupe(int id) {
+		if(groupRepository.existsById(id)) {
+			groupRepository.deleteById(id);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public Group updateGroup(int id, GroupeUpdateDto groupeUpdateDto) {
+		Group group = groupRepository.findById(id).get();
+		if (group!=null) {
+			group.setId(groupeUpdateDto.getId());
+			group.setName(groupeUpdateDto.getName());
+			return group;
+		}
 		return null;
 	}
 
